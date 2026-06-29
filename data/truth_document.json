@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "version": "1.0",
+    "last_updated": "2025-06-29",
+    "owner": "Shrijita Bhattacharyya"
+  },
+  "identity": {
+    "name": "Shrijita Bhattacharyya",
+    "role": "B.Tech CS student",
+    "institution": "IEM Kolkata",
+    "location": "Kolkata, India",
+    "cgpa": 9.25,
+    "graduation_year": 2026
+  },
+  "experience": [
+    {
+      "org": "Ethara AI",
+      "role": "AI/ML Intern",
+      "type": "internship",
+      "skills_used": [
+        "LLMs",
+        "prompt engineering",
+        "Python"
+      ],
+      "summary": "Worked on LLM evaluation and AI tooling"
+    },
+    {
+      "org": "IEM Research Foundation",
+      "role": "Research Intern",
+      "type": "internship",
+      "skills_used": [
+        "project coordination",
+        "documentation",
+        "research"
+      ],
+      "summary": "Coordinated research projects and stakeholder communication"
+    },
+    {
+      "org": "PwC",
+      "role": "Intern",
+      "type": "internship",
+      "skills_used": [
+        "enterprise tools",
+        "stakeholder management",
+        "analysis"
+      ],
+      "summary": "Enterprise-level project exposure and stakeholder contexts"
+    }
+  ],
+  "projects": [
+    {
+      "name": "LumenNotes",
+      "type": "personal",
+      "stack": [
+        "React",
+        "JavaScript"
+      ],
+      "summary": "Smart reading journal with AI insights, book-grouped notes, tag filters, and dashboard",
+      "status": "complete",
+      "repo": "https://github.com/shrijita24/smart-reading-journal"
+    },
+    {
+      "name": "ContextCore",
+      "type": "fyp",
+      "stack": [
+        "Python",
+        "LangChain",
+        "ChromaDB",
+        "OpenAI",
+        "Streamlit"
+      ],
+      "summary": "Persistent personal context layer for AI with RAG and contradiction detection",
+      "status": "in_progress",
+      "repo": "https://github.com/shrijita24/ContextCore"
+    },
+    {
+      "name": "Fake News Detection",
+      "type": "academic",
+      "stack": [
+        "Python",
+        "ML",
+        "NLP"
+      ],
+      "summary": "Fake news classifier with confidence scores, keyword pills, and session history",
+      "status": "complete"
+    }
+  ],
+  "skills": {
+    "languages": [
+      "Python",
+      "JavaScript",
+      "SQL",
+      "Java"
+    ],
+    "domains": [
+      "AI/ML",
+      "Web Development",
+      "Data Science",
+      "NLP"
+    ],
+    "tools": [
+      "LangChain",
+      "React",
+      "Git",
+      "Streamlit",
+      "ChromaDB",
+      "OpenAI API"
+    ]
+  },
+  "goals": {
+    "immediate": "Secure a summer internship in SDE or AI/ML",
+    "constraints": [
+      "Remote or Kolkata-based preferred",
+      "Available from July 2025",
+      "No local dev setup \u2014 works in browser"
+    ],
+    "tracks": [
+      "SDE",
+      "AI/ML",
+      "Data Science",
+      "Project Management"
+    ]
+  },
+  "preferences": {
+    "communication_style": "direct and concise",
+    "avoid_assumptions": [
+      "Do not assume I have a local dev setup",
+      "Do not assume I have prior industry full-time experience"
+    ]
+  },
+  "ongoing": {
+    "current_focus": "ContextCore FYP build + internship applications",
+    "active_tasks": [
+      "Build RAG pipeline",
+      "Design truth document schema",
+      "Pin GitHub repos"
+    ]
+  }
+}
