@@ -69,9 +69,6 @@ python src/chunker.py
 - [ ] Streamlit UI
 - [ ] README demo
 
-## Interview pitch
-
-*"I kept re-explaining myself to AI tools during my internship hunt — my experience, my constraints, my goals. And sometimes it would confidently tell me something about myself that was just wrong. I built ContextCore because AI should work for you, not make you work for it."*
 
 ---
 
