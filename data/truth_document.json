@@ -1,139 +1,101 @@
 {
   "meta": {
-    "version": "1.0",
-    "last_updated": "2025-06-29",
+    "version": "1.1",
+    "last_updated": "2026-07-31",
     "owner": "Shrijita Bhattacharyya"
   },
   "identity": {
     "name": "Shrijita Bhattacharyya",
-    "role": "B.Tech CS student",
+    "role": "B.Tech CS student (Final Year)",
     "institution": "IEM Kolkata",
     "location": "Kolkata, India",
     "cgpa": 9.25,
-    "graduation_year": 2026
+    "graduation_year": 2027
   },
   "experience": [
     {
-      "org": "Ethara AI",
-      "role": "AI/ML Intern",
+      "org": "PwC Launchpad 4.0",
+      "role": "GenAI / Data / Cybersecurity Trainee",
       "type": "internship",
-      "skills_used": [
-        "LLMs",
-        "prompt engineering",
-        "Python"
-      ],
-      "summary": "Worked on LLM evaluation and AI tooling"
+      "skills_used": ["GenAI fundamentals", "data fundamentals", "cybersecurity fundamentals", "enterprise engineering process"],
+      "summary": "Applying software engineering, data, and security fundamentals in enterprise client-simulation exercises, gaining structured exposure to production-grade SDLC process and code review discipline."
+    },
+    {
+      "org": "Ethara AI",
+      "role": "LLM Post-Training Intern",
+      "type": "internship",
+      "skills_used": ["LLM output evaluation", "structured/rubric-based assessment", "multimodal evaluation"],
+      "summary": "Executed 50+ daily structured evaluation tasks against defined technical criteria across text, image, and video model outputs."
     },
     {
       "org": "IEM Research Foundation",
-      "role": "Research Intern",
+      "role": "Product Development Intern",
       "type": "internship",
-      "skills_used": [
-        "project coordination",
-        "documentation",
-        "research"
-      ],
-      "summary": "Coordinated research projects and stakeholder communication"
+      "skills_used": ["REST API design", "relational database schema design", "technical documentation"],
+      "summary": "Authored REST API specifications and a 12+ table relational database schema, converting loosely defined requirements into build-ready technical documentation."
     },
     {
-      "org": "PwC",
-      "role": "Intern",
+      "org": "ElevateLabs",
+      "role": "AI/ML Engineering Intern",
       "type": "internship",
-      "skills_used": [
-        "enterprise tools",
-        "stakeholder management",
-        "analysis"
-      ],
-      "summary": "Enterprise-level project exposure and stakeholder contexts"
+      "skills_used": ["Python", "machine learning (TF-IDF, Logistic Regression)", "Streamlit deployment"],
+      "summary": "Built and deployed a Python ML pipeline end-to-end solo, taking it from prototype to a live production app on Streamlit Cloud with no supervising team."
     }
   ],
   "projects": [
     {
       "name": "LumenNotes",
       "type": "personal",
-      "stack": [
-        "React",
-        "JavaScript"
-      ],
-      "summary": "Smart reading journal with AI insights, book-grouped notes, tag filters, and dashboard",
+      "stack": ["Python", "SQLite", "OpenAI GPT-4 API", "Streamlit"],
+      "summary": "Full-stack AI reading journal. Designed the database schema, built the multi-page interface, and integrated the GPT-4 API entirely solo, shipping a fully deployed, live product.",
       "status": "complete",
       "repo": "https://github.com/shrijita24/smart-reading-journal"
     },
     {
       "name": "ContextCore",
       "type": "fyp",
-      "stack": [
-        "Python",
-        "LangChain",
-        "ChromaDB",
-        "OpenAI",
-        "Streamlit"
-      ],
-      "summary": "Persistent personal context layer for AI with RAG and contradiction detection",
+      "stack": ["Python", "LangChain", "ChromaDB", "OpenAI API", "Streamlit"],
+      "summary": "A persistent personal context layer that grounds AI conversations in verified user truth and flags contradictions. Truth document schema and chunking are built; vector store and RAG pipeline are in progress.",
       "status": "in_progress",
       "repo": "https://github.com/shrijita24/ContextCore"
     },
     {
-      "name": "Fake News Detection",
-      "type": "academic",
-      "stack": [
-        "Python",
-        "ML",
-        "NLP"
-      ],
-      "summary": "Fake news classifier with confidence scores, keyword pills, and session history",
-      "status": "complete"
+      "name": "Binance Testnet Trading Bot",
+      "type": "personal",
+      "stack": ["Python", "Binance API"],
+      "summary": "A bot that connects to a live external exchange API to place and manage trades programmatically, handling authentication and request/response flows.",
+      "status": "complete",
+      "repo": null
     }
   ],
   "skills": {
-    "languages": [
-      "Python",
-      "JavaScript",
-      "SQL",
-      "Java"
-    ],
-    "domains": [
-      "AI/ML",
-      "Web Development",
-      "Data Science",
-      "NLP"
-    ],
-    "tools": [
-      "LangChain",
-      "React",
-      "Git",
-      "Streamlit",
-      "ChromaDB",
-      "OpenAI API"
-    ]
+    "languages": ["Python", "Java", "SQL", "C", "JavaScript (basic)"],
+    "domains": ["GenAI", "LLM evaluation", "RAG pipelines", "REST API design", "database schema design", "machine learning fundamentals", "AI governance & compliance exposure"],
+    "tools": ["Git", "GitHub", "Streamlit", "LangChain", "ChromaDB", "OpenAI API"]
   },
   "goals": {
-    "immediate": "Secure a summer internship in SDE or AI/ML",
+    "immediate": "Secure a software engineering, GenAI, or founder's-office-style internship / full-time placement",
     "constraints": [
-      "Remote or Kolkata-based preferred",
-      "Available from July 2025",
-      "No local dev setup \u2014 works in browser"
+      "No professional experience with React, Next.js, Vue, or Node.js",
+      "No hands-on GCP experience (certifications only)",
+      "JavaScript is at a basic level only"
     ],
-    "tracks": [
-      "SDE",
-      "AI/ML",
-      "Data Science",
-      "Project Management"
-    ]
+    "tracks": ["Software Engineering", "GenAI / AI Engineering", "Founder's Office / hybrid technical-business roles"]
   },
   "preferences": {
     "communication_style": "direct and concise",
     "avoid_assumptions": [
-      "Do not assume I have a local dev setup",
-      "Do not assume I have prior industry full-time experience"
+      "Do not assume experience with React, Node.js, or other JS frameworks",
+      "Do not assume hands-on GCP experience",
+      "Do not fabricate achievements, skills, or projects that aren't explicitly confirmed"
     ]
   },
   "ongoing": {
-    "current_focus": "ContextCore FYP build + internship applications",
+    "current_focus": "Building out ContextCore's vector store and RAG pipeline while actively interviewing for internship roles",
     "active_tasks": [
-      "Build RAG pipeline",
-      "Design truth document schema",
-      "Pin GitHub repos"
+      "Building ChromaDB vector store integration for ContextCore",
+      "Preparing for the LitLabs interview",
+      "Applying to SDE, GenAI, and founder's-office internship roles"
     ]
   }
 }
