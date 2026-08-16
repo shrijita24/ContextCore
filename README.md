@@ -33,10 +33,10 @@ ContextCore/
 ├── src/
 │   ├── schema.py             # Pydantic models for truth document validation
 │   ├── chunker.py            # Splits truth doc into RAG-ready chunks
-│   ├── vector_store.py       # ChromaDB setup and embedding pipeline (coming soon)
+│   ├── vector_store.py       # ChromaDB setup, embedding pipeline, and semantic search
 │   ├── rag_pipeline.py       # LangChain retrieval chain (coming soon)
 │   ├── contradiction.py      # LLM-as-judge contradiction detector (coming soon)
-│   └── app.py                # Streamlit UI (coming soon)
+│   └── app.py                # Streamlit UI — live demo
 ├── .env.example
 ├── requirements.txt
 └── README.md
@@ -63,11 +63,15 @@ python src/chunker.py
 - [x] Truth document schema
 - [x] Pydantic validation layer
 - [x] RAG chunker
-- [ ] ChromaDB vector store
-- [ ] LangChain RAG pipeline
+- [x] ChromaDB vector store + semantic search
+- [x] Streamlit UI (live demo)
+- [ ] LangChain RAG pipeline (full conversational retrieval)
 - [ ] Contradiction detection module
-- [ ] Streamlit UI
-- [ ] README demo
+- [ ] README demo GIF
+
+## Live demo
+
+Try it: **[contextcore.streamlit.app](https://contextcore.streamlit.app)** *(update this link once deployed)*
 
 
 ---
