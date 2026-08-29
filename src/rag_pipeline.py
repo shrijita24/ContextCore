@@ -27,8 +27,9 @@ from schema import TruthDocument
 load_dotenv()
 
 # Free-tier Groq model — fast and more than capable for grounded Q&A
-# over a small truth document. See https://console.groq.com for options.
-CHAT_MODEL = "llama-3.1-8b-instant"
+# over a small truth document. See https://console.groq.com/docs/models
+# for current options (Groq periodically retires older Llama model ids).
+CHAT_MODEL = "openai/gpt-oss-20b"
 
 SYSTEM_PROMPT = """You are ContextCore, a grounding layer that answers questions \
 strictly using the user's verified truth document below. Rules:
