@@ -33,7 +33,7 @@ with st.expander("📍 Project status / roadmap", expanded=False):
 | RAG chunker | ✅ Done |
 | Vector store (ChromaDB + OpenAI embeddings) | ✅ Done |
 | Semantic search over truth document | ✅ Done |
-| LangChain retrieval chain (full conversational RAG) | 🚧 In progress |
+| LangChain retrieval chain (full conversational RAG) | ✅ Done |
 | Contradiction detection (LLM-as-judge) | 🚧 In progress |
 | Multi-user support | 🔭 Planned |
 """)
@@ -66,34 +66,40 @@ with col1:
             st.write(c.text)
 
 with col2:
-    st.subheader("3. Semantic Search (live RAG)")
-    st.caption("Ask a question — it's embedded and matched against the truth document chunks via ChromaDB.")
+    st.subheader("3. Conversational RAG (grounded Q&A)")
+    st.caption("Ask a question — LangChain retrieves the relevant truth-document chunks via ChromaDB and generates an answer constrained to them.")
 
     has_key = bool(os.environ.get("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY", None) if hasattr(st, "secrets") else os.environ.get("OPENAI_API_KEY"))
 
     if not has_key:
         st.warning(
             "🔑 No OpenAI API key found. Add `OPENAI_API_KEY` to this app's Streamlit Cloud "
-            "secrets (Settings → Secrets) to enable live semantic search."
+            "secrets (Settings → Secrets) to enable live conversational RAG."
         )
     else:
         os.environ.setdefault("OPENAI_API_KEY", st.secrets.get("OPENAI_API_KEY", ""))
-        from vector_store import index_chunks, search
+        from vector_store import index_chunks
+        from rag_pipeline import answer as rag_answer
 
         query = st.text_input("Ask something about the truth document", placeholder="e.g. What is her CGPA and where does she study?")
-        run = st.button("🔍 Search", type="primary")
+        run = st.button("💬 Ask", type="primary")
 
         if run and query.strip():
-            with st.spinner("Indexing + searching..."):
+            with st.spinner("Indexing + retrieving + generating..."):
                 try:
                     index_chunks(chunks)
-                    results = search(query, top_k=3)
-                    for i, r in enumerate(results, 1):
-                        with st.container(border=True):
-                            st.markdown(f"**Match {i}** &nbsp;·&nbsp; section: `{r['metadata'].get('section')}` &nbsp;·&nbsp; distance: {r['distance']:.3f}")
-                            st.write(r["text"])
+                    result = rag_answer(query, top_k=3)
+
+                    st.markdown("**Answer**")
+                    with st.container(border=True):
+                        st.write(result["answer"])
+
+                    with st.expander("📎 Grounded in these chunks"):
+                        for i, src in enumerate(result["sources"], 1):
+                            st.markdown(f"**Source {i}** &nbsp;·&nbsp; section: `{src.metadata.get('section')}`")
+                            st.write(src.page_content)
                 except Exception as e:
-                    st.error(f"Search failed: {e}")
+                    st.error(f"RAG pipeline failed: {e}")
 
 st.divider()
 st.caption("Built by [Shrijita Bhattacharyya](https://github.com/shrijita24) · [Repo](https://github.com/shrijita24/ContextCore) · Contradiction detection coming next.")
