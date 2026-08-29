@@ -34,7 +34,7 @@ with st.expander("📍 Project status / roadmap", expanded=False):
 | Vector store (ChromaDB + OpenAI embeddings) | ✅ Done |
 | Semantic search over truth document | ✅ Done |
 | LangChain retrieval chain (full conversational RAG) | ✅ Done |
-| Contradiction detection (LLM-as-judge) | 🚧 In progress |
+| Contradiction detection (LLM-as-judge) | ✅ Done |
 | Multi-user support | 🔭 Planned |
 """)
 
@@ -103,4 +103,47 @@ with col2:
                     st.error(f"RAG pipeline failed: {e}")
 
 st.divider()
-st.caption("Built by [Shrijita Bhattacharyya](https://github.com/shrijita24) · [Repo](https://github.com/shrijita24/ContextCore) · Contradiction detection coming next.")
+st.subheader("4. Contradiction Detection")
+st.caption("Paste a statement an AI assistant made about you — this checks it against the truth document and flags conflicts.")
+
+has_groq_key = bool(os.environ.get("GROQ_API_KEY") or (st.secrets.get("GROQ_API_KEY", None) if hasattr(st, "secrets") else None))
+
+if not has_groq_key:
+    st.warning(
+        "🔑 No Groq API key found. Add `GROQ_API_KEY` to this app's Streamlit Cloud "
+        "secrets (Settings → Secrets) to enable contradiction detection."
+    )
+else:
+    os.environ.setdefault("GROQ_API_KEY", st.secrets.get("GROQ_API_KEY", ""))
+    from vector_store import index_chunks as _index_chunks_cd
+    from contradiction import check_contradiction
+
+    statement = st.text_area(
+        "Statement to check",
+        placeholder="e.g. She studies at IIT Bombay and has a CGPA of 7.1.",
+        height=80,
+    )
+    check = st.button("🔎 Check for contradictions", type="primary")
+
+    if check and statement.strip():
+        with st.spinner("Retrieving relevant facts + judging..."):
+            try:
+                _index_chunks_cd(chunks)
+                result = check_contradiction(statement, top_k=3)
+
+                if result["contradicts"]:
+                    st.error(f"⚠️ Contradiction detected (confidence: {result['confidence']:.0%})")
+                else:
+                    st.success(f"✓ Consistent with truth document (confidence: {result['confidence']:.0%})")
+
+                st.write(result["explanation"])
+
+                with st.expander("📎 Evidence used for this verdict"):
+                    for i, doc in enumerate(result["evidence"], 1):
+                        st.markdown(f"**Source {i}** &nbsp;·&nbsp; section: `{doc.metadata.get('section')}`")
+                        st.write(doc.page_content)
+            except Exception as e:
+                st.error(f"Contradiction check failed: {e}")
+
+st.divider()
+st.caption("Built by [Shrijita Bhattacharyya](https://github.com/shrijita24) · [Repo](https://github.com/shrijita24/ContextCore)")
