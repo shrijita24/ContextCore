@@ -1,8 +1,10 @@
 """
 ContextCore — RAG Pipeline
 LangChain conversational retrieval chain that grounds every answer in the
-user's truth document. Reuses the same persistent ChromaDB collection built
-by vector_store.py, so no re-indexing logic is duplicated here.
+user's truth document. Uses free, no-billing infrastructure end to end:
+- Embeddings: local sentence-transformers model (same one vector_store.py
+  uses), so the LangChain retriever reads the exact same ChromaDB index.
+- Generation: Groq's free-tier hosted LLMs (fast, no credit card required).
 """
 
 from __future__ import annotations
@@ -10,7 +12,8 @@ import os
 from typing import List, TypedDict
 
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_groq import ChatGroq
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -23,7 +26,9 @@ from schema import TruthDocument
 
 load_dotenv()
 
-CHAT_MODEL = "gpt-4o-mini"
+# Free-tier Groq model — fast and more than capable for grounded Q&A
+# over a small truth document. See https://console.groq.com for options.
+CHAT_MODEL = "llama-3.1-8b-instant"
 
 SYSTEM_PROMPT = """You are ContextCore, a grounding layer that answers questions \
 strictly using the user's verified truth document below. Rules:
@@ -48,13 +53,11 @@ class RAGAnswer(TypedDict):
 def _get_vectorstore() -> Chroma:
     """
     Connects to the same persistent ChromaDB collection that vector_store.py
-    writes to, but wrapped as a LangChain VectorStore so it can be used as a
-    retriever inside an LCEL chain.
+    writes to, wrapped as a LangChain VectorStore. Uses the identical local
+    embedding model as vector_store.py so query vectors line up with the
+    ones already stored in the index.
     """
-    embeddings = OpenAIEmbeddings(
-        model=EMBEDDING_MODEL,
-        api_key=os.environ["OPENAI_API_KEY"],
-    )
+    embeddings = HuggingFaceEmbeddings(model_name=f"sentence-transformers/{EMBEDDING_MODEL}")
     return Chroma(
         collection_name=COLLECTION_NAME,
         embedding_function=embeddings,
@@ -81,7 +84,7 @@ def build_chain(top_k: int = 3):
         ("human", "{question}"),
     ])
 
-    llm = ChatOpenAI(model=CHAT_MODEL, temperature=0)
+    llm = ChatGroq(model=CHAT_MODEL, temperature=0, api_key=os.environ["GROQ_API_KEY"])
 
     chain = (
         {"context": retriever | _format_docs, "question": RunnablePassthrough()}
