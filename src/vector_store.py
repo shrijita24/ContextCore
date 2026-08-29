@@ -1,23 +1,22 @@
 """
 ContextCore — Vector Store
-Embeds truth-document chunks with OpenAI embeddings and stores them
-in a local ChromaDB collection so they can be retrieved by relevance.
+Embeds truth-document chunks with a free, local sentence-transformers model
+and stores them in a local ChromaDB collection so they can be retrieved by
+relevance. No API key or billing required for embeddings.
 """
 
 from __future__ import annotations
-import os
 from typing import List
 
 import chromadb
 from chromadb.utils import embedding_functions
-from dotenv import load_dotenv
 
 from schema import TruthDocument
 from chunker import Chunk, chunk_truth_document
 
-load_dotenv()
-
-EMBEDDING_MODEL = "text-embedding-ada-002"
+# Small, fast, free model that runs on CPU — good enough for a
+# truth-document-sized dataset like this one. Downloads once, then caches.
+EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 COLLECTION_NAME = "truth_document"
 DB_PATH = "./chroma_db"  # local, persistent on disk
 
@@ -25,18 +24,18 @@ DB_PATH = "./chroma_db"  # local, persistent on disk
 def get_collection():
     """
     Connects to (or creates) a local, persistent ChromaDB collection,
-    configured to embed text using OpenAI's embedding model.
+    configured to embed text using a free local sentence-transformers
+    model — no external API calls, no billing.
     """
     client = chromadb.PersistentClient(path=DB_PATH)
 
-    openai_ef = embedding_functions.OpenAIEmbeddingFunction(
-        api_key=os.environ["OPENAI_API_KEY"],
+    local_ef = embedding_functions.SentenceTransformerEmbeddingFunction(
         model_name=EMBEDDING_MODEL,
     )
 
     collection = client.get_or_create_collection(
         name=COLLECTION_NAME,
-        embedding_function=openai_ef,
+        embedding_function=local_ef,
     )
     return collection
 
@@ -84,7 +83,7 @@ if __name__ == "__main__":
     # 2. Split it into retrieval-ready chunks
     chunks = chunk_truth_document(doc)
 
-    # 3. Embed + store those chunks in ChromaDB
+    # 3. Embed + store those chunks in ChromaDB (free, local)
     index_chunks(chunks)
 
     # 4. Quick sanity-check search
