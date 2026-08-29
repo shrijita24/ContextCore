@@ -17,8 +17,8 @@ Every AI conversation starts from zero. Users re-explain their job, goals, const
 ## Tech stack
 
 - **Language**: Python
-- **LLM**: OpenAI GPT-4
-- **Embeddings**: OpenAI `text-embedding-ada-002`
+- **LLM**: Groq (`openai/gpt-oss-20b`) — free tier
+- **Embeddings**: local `sentence-transformers` (`all-MiniLM-L6-v2`) — no API key required
 - **Vector DB**: ChromaDB (local)
 - **RAG Framework**: LangChain
 - **Contradiction Detection**: LLM-as-judge pattern
@@ -33,9 +33,9 @@ ContextCore/
 ├── src/
 │   ├── schema.py             # Pydantic models for truth document validation
 │   ├── chunker.py            # Splits truth doc into RAG-ready chunks
-│   ├── vector_store.py       # ChromaDB setup, embedding pipeline, and semantic search
-│   ├── rag_pipeline.py       # LangChain retrieval chain (coming soon)
-│   ├── contradiction.py      # LLM-as-judge contradiction detector (coming soon)
+│   ├── vector_store.py       # ChromaDB setup, local embedding pipeline, and semantic search
+│   ├── rag_pipeline.py       # LangChain retrieval chain (conversational RAG via Groq)
+│   ├── contradiction.py      # LLM-as-judge contradiction detector
 │   └── app.py                # Streamlit UI — live demo
 ├── .env.example
 ├── requirements.txt
@@ -48,13 +48,22 @@ ContextCore/
 git clone https://github.com/shrijita24/ContextCore
 cd ContextCore
 pip install -r requirements.txt
-cp .env.example .env  # add your OpenAI key
+cp .env.example .env  # add your free Groq API key (console.groq.com — no card required)
 
 # Validate your truth document
 python src/schema.py
 
 # Preview RAG chunks
 python src/chunker.py
+
+# Index chunks + run a test semantic search
+python src/vector_store.py
+
+# Run the full conversational RAG pipeline
+python src/rag_pipeline.py
+
+# Run contradiction detection tests
+python src/contradiction.py
 ```
 
 ## Build status
@@ -63,15 +72,15 @@ python src/chunker.py
 - [x] Truth document schema
 - [x] Pydantic validation layer
 - [x] RAG chunker
-- [x] ChromaDB vector store + semantic search
+- [x] ChromaDB vector store + semantic search (local, free embeddings)
 - [x] Streamlit UI (live demo)
-- [ ] LangChain RAG pipeline (full conversational retrieval)
-- [ ] Contradiction detection module
+- [x] LangChain RAG pipeline (full conversational retrieval, via Groq)
+- [x] Contradiction detection module (LLM-as-judge, via Groq)
 - [ ] README demo GIF
 
 ## Live demo
 
-Try it: **[contextcore.streamlit.app](https://contextcore.streamlit.app)** *(update this link once deployed)*
+Try it: **[contextcore-6qfpxktgczy5akqmcvzryz.streamlit.app](https://contextcore-6qfpxktgczy5akqmcvzryz.streamlit.app/)**
 
 
 ---
