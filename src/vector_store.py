@@ -17,7 +17,7 @@ from chunker import Chunk, chunk_truth_document
 # Small, fast, free model that runs on CPU — good enough for a
 # truth-document-sized dataset like this one. Downloads once, then caches.
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
-COLLECTION_NAME = "truth_document"
+COLLECTION_NAME = "truth_document_v2"  # new name — old collection was built with OpenAI embeddings, incompatible with local ones
 DB_PATH = "./chroma_db"  # local, persistent on disk
 
 
