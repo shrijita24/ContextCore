@@ -69,15 +69,16 @@ with col2:
     st.subheader("3. Conversational RAG (grounded Q&A)")
     st.caption("Ask a question — LangChain retrieves the relevant truth-document chunks via ChromaDB and generates an answer constrained to them.")
 
-    has_key = bool(os.environ.get("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY", None) if hasattr(st, "secrets") else os.environ.get("OPENAI_API_KEY"))
+    has_key = bool(os.environ.get("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY", None) if hasattr(st, "secrets") else os.environ.get("GROQ_API_KEY"))
 
     if not has_key:
         st.warning(
-            "🔑 No OpenAI API key found. Add `OPENAI_API_KEY` to this app's Streamlit Cloud "
-            "secrets (Settings → Secrets) to enable live conversational RAG."
+            "🔑 No Groq API key found. Add `GROQ_API_KEY` to this app's Streamlit Cloud "
+            "secrets (Settings → Secrets) to enable live conversational RAG. "
+            "Free key at https://console.groq.com — no credit card required."
         )
     else:
-        os.environ.setdefault("OPENAI_API_KEY", st.secrets.get("OPENAI_API_KEY", ""))
+        os.environ.setdefault("GROQ_API_KEY", st.secrets.get("GROQ_API_KEY", ""))
         from vector_store import index_chunks
         from rag_pipeline import answer as rag_answer
 
