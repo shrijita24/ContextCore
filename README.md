@@ -1,54 +1,59 @@
-# ContextCore
+Live demo: https://contextcore-6qfpxktgczy5akqmcvzryz.streamlit.app/
 
-> A persistent personal context layer that grounds AI conversations in verified user truth — and flags when AI contradicts it.
+ContextCore
 
-## The problem
+A persistent personal context layer that grounds AI conversations in verified user truth — and flags when AI contradicts it.
+
+The problem
 
 Every AI conversation starts from zero. Users re-explain their job, goals, constraints, and context every single time. And when AI does "remember" — it hallucinates details confidently. There's no accountability layer. No source of truth.
 
-## What ContextCore does
-
-| Module | What it does |
-|---|---|
-| **Truth Document Builder** | Define your personal context once — career, projects, goals, constraints |
-| **Context-Grounded Conversations** | Every AI conversation is automatically grounded via RAG |
-| **Contradiction Detection** | AI output that contradicts your truth document gets flagged in real time |
-
-## Tech stack
-
-- **Language**: Python
-- **LLM**: Groq (`openai/gpt-oss-20b`) — free tier
-- **Embeddings**: local `sentence-transformers` (`all-MiniLM-L6-v2`) — no API key required
-- **Vector DB**: ChromaDB (local)
-- **RAG Framework**: LangChain
-- **Contradiction Detection**: LLM-as-judge pattern
-- **Frontend**: Streamlit
-
-## Project structure
-
-```
+What ContextCore does
+Module	What it does
+Truth Document Builder	Define your personal context once — career, projects, goals, constraints
+RAG Chunker	Splits your truth document into retrieval-ready chunks
+Ask AI	Every conversation is automatically grounded via RAG against your truth document
+Contradiction Check	Paste any AI-generated statement about you — it's checked against your truth document and flagged in real time if it conflicts
+How it works
+Load and validate your truth document (Pydantic schema)
+The chunker splits it into RAG-ready pieces and embeds them into ChromaDB
+Ask AI retrieves relevant chunks via LangChain and answers grounded in your real context
+Contradiction Check runs an LLM-as-judge pass on any statement you paste in, comparing it against your truth document and flagging conflicts
+Tech stack
+Language: Python
+LLM: Groq
+Vector DB: ChromaDB (local)
+RAG Framework: LangChain
+Contradiction Detection: LLM-as-judge pattern
+Frontend: Streamlit
+Project structure
 ContextCore/
 ├── data/
 │   └── truth_document.json   # Your personal context source of truth
 ├── src/
 │   ├── schema.py             # Pydantic models for truth document validation
 │   ├── chunker.py            # Splits truth doc into RAG-ready chunks
-│   ├── vector_store.py       # ChromaDB setup, local embedding pipeline, and semantic search
-│   ├── rag_pipeline.py       # LangChain retrieval chain (conversational RAG via Groq)
+│   ├── vector_store.py       # ChromaDB setup and embedding pipeline
+│   ├── rag_pipeline.py       # LangChain retrieval chain
 │   ├── contradiction.py      # LLM-as-judge contradiction detector
-│   └── app.py                # Streamlit UI — live demo
+│   └── app.py                # Streamlit UI
 ├── .env.example
 ├── requirements.txt
 └── README.md
-```
-
-## Getting started
-
-```bash
+Build status
+ Architecture design
+ Truth document schema
+ Pydantic validation layer
+ RAG chunker
+ ChromaDB vector store
+ LangChain RAG pipeline
+ Contradiction detection module
+ Streamlit UI
+Getting started
 git clone https://github.com/shrijita24/ContextCore
 cd ContextCore
 pip install -r requirements.txt
-cp .env.example .env  # add your free Groq API key (console.groq.com — no card required)
+cp .env.example .env  # add your Groq API key
 
 # Validate your truth document
 python src/schema.py
@@ -56,33 +61,4 @@ python src/schema.py
 # Preview RAG chunks
 python src/chunker.py
 
-# Index chunks + run a test semantic search
-python src/vector_store.py
-
-# Run the full conversational RAG pipeline
-python src/rag_pipeline.py
-
-# Run contradiction detection tests
-python src/contradiction.py
-```
-
-## Build status
-
-- [x] Architecture design
-- [x] Truth document schema
-- [x] Pydantic validation layer
-- [x] RAG chunker
-- [x] ChromaDB vector store + semantic search (local, free embeddings)
-- [x] Streamlit UI (live demo)
-- [x] LangChain RAG pipeline (full conversational retrieval, via Groq)
-- [x] Contradiction detection module (LLM-as-judge, via Groq)
-- [ ] README demo GIF
-
-## Live demo
-
-Try it: **[contextcore-6qfpxktgczy5akqmcvzryz.streamlit.app](https://contextcore-6qfpxktgczy5akqmcvzryz.streamlit.app/)**
-
-
----
-
-Built by [Shrijita Bhattacharyya](https://github.com/shrijita24) · Final Year Project, IEM Kolkata
+Built by Shrijita Bhattacharyya · Final Year Project, IEM Kolkata
