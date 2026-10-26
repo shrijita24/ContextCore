@@ -27,7 +27,7 @@ Every AI conversation starts from zero. Users re-explain their job, goals, const
 ## Tech stack
 
 - **Language**: Python
-- **LLM**: Groq
+- **LLM**: OpenAI
 - **Vector DB**: ChromaDB (local)
 - **RAG Framework**: LangChain
 - **Contradiction Detection**: LLM-as-judge pattern
